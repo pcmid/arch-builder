@@ -1,20 +1,17 @@
 FROM archlinux:base-devel
 MAINTAINER pcmid <plzcmid@gmail.com>
 
-ADD makepkg.conf /
-ADD set_conf.sh /
-
 RUN pacman --sync --refresh --sysupgrade --noconfirm git \
     && pacman --sync --clean --clean --noconfirm \
     && find /var/cache/pacman/pkg -mindepth 1 -delete \
     && useradd abs -m \
     && mkdir -p /build /packages \
-    && chown abs:abs /build /packages /makepkg.conf
-
-ENV PKGDEST /packages
+    && chown abs:abs /build /packages
+USER abs
 
 VOLUME /packages
-USER abs
+ENV PKGDEST /packages
 WORKDIR /build
 
-CMD ["makepkg", "--config", "/makepkg.conf", "-csf"]
+ADD entrypoint.sh /entrypoint.sh
+ENTRYPOINT ["/entrypoint.sh"]
