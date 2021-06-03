@@ -1,13 +1,20 @@
-#!/bin/sh
+#!/bin/bash
 
 init() {
     cp /etc/makepkg.conf /tmp/makepkg.conf
     echo 'MAKEFLAGS="-j'$(nproc)'"' >> /tmp/makepkg.conf
+
+    source ./PKGBUILD
+    for key in ${validpgpkeys[@]};do
+        echo "Adding key ${key}..."
+        gpg --recv-keys --keyserver hkp://hkps.pool.sks-keyservers.net:80 "${key}" || break
+    done
+    echo "init done"
 }
 
-build() {
+build_package() {
     makepkg --config /tmp/makepkg.conf --syncdeps --noconfirm --needed --noprogressbar --cleanbuild --clean --force --sign
 }
 
 init
-build
+build_package
