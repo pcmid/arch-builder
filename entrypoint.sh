@@ -1,6 +1,8 @@
 #!/bin/bash
 
 init() {
+    sudo chown abs /build /packages
+
     cp /etc/makepkg.conf /tmp/makepkg.conf
     echo 'MAKEFLAGS="-j'$(nproc)'"' >> /tmp/makepkg.conf
 
