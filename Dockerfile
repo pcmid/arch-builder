@@ -1,7 +1,7 @@
 FROM archlinux:base-devel
 MAINTAINER pcmid <plzcmid@gmail.com>
 
-RUN pacman --sync --refresh --sysupgrade --noconfirm git sudo \
+RUN pacman --sync --refresh --sysupgrade --noconfirm git \
     && pacman --sync --clean --clean --noconfirm \
     && find /var/cache/pacman/pkg -mindepth 1 -delete \
     && useradd abs -m \

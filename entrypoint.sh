@@ -15,6 +15,7 @@ init() {
 }
 
 build_package() {
+    sudo pacman --sync --refresh --sysupgrade --noconfirm
     makepkg --config /tmp/makepkg.conf --syncdeps --noconfirm --needed --noprogressbar --cleanbuild --clean --force --sign
 }
 
