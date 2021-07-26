@@ -9,7 +9,7 @@ init() {
     source ./PKGBUILD
     for key in ${validpgpkeys[@]};do
         echo "Adding key ${key}..."
-        gpg --recv-keys --keyserver hkp://hkps.pool.sks-keyservers.net:80 "${key}" || break
+        gpg --recv-keys --keyserver hkp://keyserver.ubuntu.com:80 "${key}" || break
     done
     echo "init done"
 }
